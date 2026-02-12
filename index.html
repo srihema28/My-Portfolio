@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Hema's Portfolio - AI/ML Student</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /*
+        ========================================
+        1. GLOBAL STYLES & VARIABLES
+        ========================================
+        */
+        :root {
+            --primary-color: #4a00e0; /* Deep Purple */
+            --secondary-color: #8e2de2; /* Lighter Purple */
+            --accent-color: #00bcd4; /* Cyan/Blue */
+            --text-light: #f4f4f9;
+            --text-dark: #333;
+            --bg-dark: #121212;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --transition-speed: 0.4s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--text-light);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        section {
+            padding: 80px 5%;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            opacity: 0; /* Initial state for fade-in animation */
+            transform: translateY(30px);
+        }
+
+        section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            position: relative;
+            color: var(--primary-color);
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /*
+        ========================================
+        2. NAVIGATION BAR
+        ========================================
+        */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 15px 5%;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color var(--transition-speed);
+            color: #333;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color var(--transition-speed), border-bottom 0.3s ease;
+            padding-bottom: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger .bar {
+            width: 25px;
+            height: 3px;
+            margin: 5px 0;
+            background-color: var(--primary-color);
+            transition: 0.4s;
+        }
+
+        /* Mobile Menu Animation */
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /*
+        ========================================
+        3. HERO SECTION (Animated Gradient)
+        ========================================
+        */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        /* Animated Background */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #4a00e0, #8e2de2, #00bcd4, #5ad8ff);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+            z-index: -1;
+        }
+
+        .hero-content {
+            z-index: 10;
+        }
+
+        .hero-content h1 {
+            font-size: 4em;
+            margin-bottom: 10px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .hero-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent-color);
+            color: var(--bg-dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--accent-color);
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: var(--text-light);
+            color: var(--primary-color);
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            filter: blur(10px);
+            z-index: 5;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .float-1 { top: 20%; left: 10%; animation-delay: 0s; transform: scale(0.8); }
+        .float-2 { top: 70%; right: 15%; animation-delay: 3s; transform: scale(1.2); }
+        .float-3 { bottom: 5%; left: 50%; animation-delay: 6s; transform: scale(0.6); }
+
+        @keyframes float {
+            0% { transform: translateY(0px) scale(var(--s, 1)); }
+            50% { transform: translateY(-20px) scale(var(--s, 1.1)); }
+            100% { transform: translateY(0px) scale(var(--s, 1)); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /*
+        ========================================
+        4. ABOUT SECTION
+        ========================================
+        */
+        #about {
+            background-color: var(--text-light);
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .about-text {
+            max-width: 800px;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 900px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card .icon {
+            font-size: 2.5em;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .stat-card .number {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-card p {
+            font-size: 1em;
+            color: var(--text-dark);
+            margin-top: 5px;
+        }
+
+        /*
+        ========================================
+        5. SKILLS SECTION
+        ========================================
+        */
+        #skills {
+            background: linear-gradient(135deg, #f4f4f9, #eef1f6);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category {
+            background: var(--text-light);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--accent-color);
+            transition: border-left 0.3s, transform 0.3s;
+        }
+
+        .skill-category:hover {
+            border-left: 5px solid var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .skill-category h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-category li:last-child {
+            border-bottom: none;
+        }
+
+        .skill-category li i {
+            color: var(--secondary-color);
+            margin-right: 10px;
+        }
+
+        /*
+        ========================================
+        6. PROJECTS SECTION (Gradient Cards)
+        ========================================
+        */
+        #projects {
+            background-color: var(--text-light);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            transition: transform 0.5s ease-out;
+            z-index: -1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card:hover::before {
+            transform: rotate(25deg);
+        }
+
+        .project-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .project-link {
+            display: inline-block;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid var(--accent-color);
+            transition: border-bottom 0.3s, color 0.3s;
+        }
+
+        .project-link:hover {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--text-light);
+        }
+
+        /*
+        ========================================
+        7. CONTACT SECTION (Form)
+        ========================================
+        */
+        #contact {
+            background: linear-gradient(to right, #4a00e0, #8e2de2);
+            color: var(--text-light);
+        }
+
+        #contact h2 {
+            color: var(--text-light);
+        }
+
+        #contact h2::after {
+            background: var(--text-light);
+        }
+
+        .contact-content {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .contact-info, .contact-form-container {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        .contact-item i {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: var(--accent-color);
+        }
+
+        /* Contact Form */
+        .contact-form-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            font-size: 1em;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            background: var(--text-light);
+            box-shadow: 0 0 0 3px var(--accent-color);
+        }
+
+        .submit-btn {
+            background: var(--accent-color);
+            color: var(--bg-dark);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--text-light);
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        /*
+        ========================================
+        8. FOOTER
+        ========================================
+        */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--bg-dark);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+        }
+
+        /*
+        ========================================
+        9. MEDIA QUERIES (Responsiveness)
+        ========================================
+        */
+        @media (max-width: 768px) {
+            h1 { font-size: 3em !important; }
+            h2 { font-size: 2em !important; }
+
+            /* Navigation */
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 70%;
+                height: 100%;
+                background: var(--text-light);
+                flex-direction: column;
+                padding-top: 100px;
+                text-align: center;
+                transform: translateX(100%);
+                transition: transform 0.5s ease-in-out;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .nav-links a {
+                display: block;
+                margin: 20px 0;
+                font-size: 1.2em;
+                color: var(--primary-color);
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            /* Sections */
+            section {
+                padding: 50px 5%;
+            }
+
+            .stats-grid, .skills-grid, .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="logo"> Hema-portfolio</Sri-portfolio> !</a>
+            <div class="nav-links" id="navLinks">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="is-visible"> <div class="hero-content">
+            <h1>Hi, I'm  Hema 👋</h1>
+            <p>
+                An ambitious AI/ML Student at Sri Amaravathi College,<br>
+                passionate about building intelligent systems and engaging digital experiences.
+            </p>
+            <a href="#projects" class="hero-button">View My Work</a>
+        </div>
+
+        <div class="floating-element float-1" style="--s: 0.8;"></div>
+        <div class="floating-element float-2" style="--s: 1.2;"></div>
+        <div class="floating-element float-3" style="--s: 0.6;"></div>
+    </section>
+
+    <section id="about" class="container">
+        <div class="about-content">
+            <h2><i class="fas fa-user-graduate"></i> About Me</h2>
+            <div class="about-text">
+                <p>
+                    I am currently pursuing my degree in Artificial Intelligence and Machine Learning at sri Amaravathi College.
+                    My academic journey is focused on transforming complex data into insightful and impactful applications.
+                    I believe in a multi-disciplinary approach, blending my technical skills in AI/ML with practical experience in Front-End Development and Digital Marketing to create holistic solutions.
+                </p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-brain icon"></i>
+                    <div class="number">AI/ML</div>
+                    <p>core education</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-laptop-code icon"></i>
+                    <div class="number">15+</div>
+                    <p>Completed Projects</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-school icon"></i>
+                    <div class="number">SACAS College</div>
+                    <p>Current Institution-student at sri amaravathi college of arts and science</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="container">
+        <h2><i class="fas fa-tools"></i> My Expertise</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3><i class="fas fa-code"></i> Front-End Development</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> HTML (Semantic Markup)</li>
+                    <li><i class="fas fa-check-circle"></i> CSS (Flexbox, Grid, Animations)</li>
+                    <li><i class="fas fa-check-circle"></i> JavaScript (Vanilla JS, DOM Manipulation)</li>
+                    <li><i class="fas fa-check-circle"></i> Responsive Design & Cross-Browser</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-robot"></i> AI / ML Studies</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Machine Learning Algorithms</li>
+                    <li><i class="fas fa-check-circle"></i> Data Preprocessing & Analysis</li>
+                    <li><i class="fas fa-check-circle"></i> Deep Learning Fundamentals</li>
+                    <li><i class="fas fa-check-circle"></i> Python (Pandas, NumPy, Scikit-learn)</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-chart-line"></i> Digital Marketing</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> SEO (On-Page & Off-Page)</li>
+                    <li><i class="fas fa-check-circle"></i> Social Media Marketing (SMM)</li>
+                    <li><i class="fas fa-check-circle"></i> Content Strategy</li>
+                    <li><i class="fas fa-check-circle"></i> Analytics & Reporting</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-palette"></i> Design & UX</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> User Experience (UX) Principles</li>
+                    <li><i class="fas fa-check-circle"></i> User Interface (UI) Design</li>
+                    <li><i class="fas fa-check-circle"></i> Prototyping Tools (e.g., Figma)</li>
+                    <li><i class="fas fa-check-circle"></i> Visual Design Fundamentals</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="container">
+        <h2><i class="fas fa-project-diagram"></i> Featured Projects</h2>
+        <div class="projects-grid">
+           
+            <div class="project-card" style="background: linear-gradient(135deg, #00bcd4, #5ad8ff);">
+                <h3>Interactive Portfolio Site</h3>
+                <p>A fully responsive portfolio using advanced CSS animations and vanilla JavaScript for smooth scroll effects and a clean, modern aesthetic.</p>
+                
+            </div>
+            <div class="project-card" style="background: linear-gradient(135deg, #f44336, #ff9800);">
+                <h3>SEO Content Strategy Tool</h3>
+                <p>A simple web tool prototype to analyze keyword density and suggest topic clusters for high-ranking SEO content generation.</p>
+             </div>
+            <div class="project-card" style="background: linear-gradient(135deg, #9c27b0, #673ab7);">
+                <h3>E-Commerce Checkout Flow Redesign</h3>
+                <p>A UX study and high-fidelity prototype redesigning a complex e-commerce checkout process to improve conversion rates and user satisfaction.</p>
+                
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="container">
+        <h2><i class="fas fa-envelope"></i> Get In Touch</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <p>I am currently seeking opportunities to apply my AI/ML knowledge and development skills. Feel free to reach out for collaborations or project inquiries!</p>
+
+                <div class="contact-item">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Email:<a href="mailto:srihema908@gmail.com" style="color: var(--text-light); text-decoration: underline;">srihema908@gmail.com</a></span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>Phone:<a href="tel:+916374183439" style="color: var(--text-light); text-decoration: underline;">+91 6374183439</a></span>
+                </div>
+            </div>
+
+           
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Sri Hema's Portfolio.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. MOBILE MENU TOGGLE ---
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            const navItems = navLinks.querySelectorAll('a');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close menu when a link is clicked (mobile navigation)
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // --- 2. SCROLL-TRIGGERED FADE-IN ANIMATION ---
+            const sections = document.querySelectorAll('section');
+
+            const observerOptions = {
+                root: null, // relative to viewport
+                rootMargin: '0px',
+                threshold: 0.2 // when 20% of the section is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing once it's visible
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                // Skip the Hero section since it's visible by default
+                if (section.id !== 'hero') {
+                    observer.observe(section);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
